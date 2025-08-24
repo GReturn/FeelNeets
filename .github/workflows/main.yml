@@ -25,6 +25,10 @@ jobs:
       # publishes Blazor project to the release-folder
       - name: Publish .NET Core Project
         run: dotnet publish FeelNeets/FeelNeets.csproj -c Release -o release --nologo
+      
+      # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
+      - name: Change base-tag in index.html from / to FeelNeets
+        run: sed -i 's/<base href="\/" \/>/<base href="\/FeelNeets\/" \/>/g' release/wwwroot/index.html
 
       # commits wwwroot to GitHub Pages
       - name: Commit wwwroot to GitHub Pages
@@ -33,7 +37,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: release/wwwroot
-
-          # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
-      - name: Change base-tag in index.html from / to FeelNeets
-        run: sed -i 's/<base href="\/" \/>/<base href="\/FeelNeets\/" \/>/g' release/wwwroot/index.html
