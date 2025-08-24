@@ -33,3 +33,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: release/wwwroot
+
+          # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
+      - name: Change base-tag in index.html from / to FeelNeets
+        run: sed -i 's/<base href="\/" \/>/<base href="\/FeelNeets\/" \/>/g' release/wwwroot/index.html
