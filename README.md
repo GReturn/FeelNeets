@@ -3,4 +3,4 @@ A website storing PhilNITS reviewers -- questionnaires and answer sheets from 20
 
 you can just download them directly from the [PhilNITS website directly](https://itpec.org/pastexamqa/fe.html), but I just wanted an excuse to work with Blazor WASM.
 
-PS. This was a weekend project. Don't judge too much my UI huhuhu
+PS. This was a weekend project. Don't judge my UI too much huhuhu
