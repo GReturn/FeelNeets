@@ -1,0 +1,69 @@
+﻿@using MudBlazor.Utilities
+@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="_feelNeetsTheme" IsDarkMode="_isDarkMode" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar>
+        <MudGrid Spacing="5">
+            @* <MudItem>
+                <MudImage
+                    Src="img/feelneets.png"
+                    Alt="FeelNEETS Logo"
+                    Width="32"
+                    Height="32"
+                />
+            </MudItem> *@
+            <MudItem>
+                <MudText Typo="Typo.h5" Style="font-weight:bold">
+                    FeelNEETS
+                </MudText>
+            </MudItem>
+        </MudGrid>
+        
+        <MudIconButton
+            Icon="@(_isDarkMode ? Icons.Material.Filled.LightMode : Icons.Material.Filled.DarkMode)"
+            Class="@($"darkmode-icon{(_isIconHovered ? " hovered" : "")}")"
+            Style="cursor:pointer;"
+            OnClick="ToggleDarkMode"
+        />
+    </MudAppBar>
+
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Gutters="false">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code
+{
+    MudTheme _feelNeetsTheme = new()
+    {
+        PaletteLight = new PaletteLight()
+        {
+            AppbarBackground = new MudColor(230, 90, 90, 1.0),
+            Primary = new MudColor(230, 90, 90, 1.0),
+            Secondary = new MudColor(230, 90, 90, 1.0),
+        },
+
+        PaletteDark = new PaletteDark()
+        {
+            AppbarBackground = new MudColor(230, 90, 90, 1.0),
+            Primary = new MudColor(230, 90, 90, 1.0),
+            Secondary = new MudColor(230, 90, 90, 1.0),
+        }
+    };
+
+
+    private bool _isDarkMode = false;
+    private bool _isIconHovered;
+
+    private void ToggleDarkMode()
+    {
+        _isDarkMode = !_isDarkMode;
+    }
+}

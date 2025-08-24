@@ -1,0 +1,146 @@
+﻿@page "/"
+
+@inject HttpClient Http
+
+<PageTitle>FeelNEETS</PageTitle>
+
+<MudText Typo="Typo.h4" Style="font-weight:bold; margin:24px" GutterBottom="true" Align="Align.Center" Class="m4">
+    PhilNITS Exams 2007-2025
+</MudText>
+
+<MudPaper Class="pa-4" Elevation="2">
+    <MudStack Spacing="2">
+        <MudGrid>
+            <MudItem xs="12" sm="4">
+                <MudSelect T="int" Label="Year" @bind-Value="_selectedYear" Dense="true">
+                    @foreach (var year in _years)
+                    {
+                        <MudSelectItem Value="@(year)">@year</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudSelect T="string" Label="Spring/Autumn" @bind-Value="_selectedQuarter" Dense="true">
+                    @foreach (var quarter in _quarters)
+                    {
+                        <MudSelectItem Value="@(quarter)">@quarter</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudSelect T="string" Label="AM/PM" @bind-Value="_selectedAmPm" Dense="true">
+                    @foreach (var ampm in _ampm)
+                    {
+                        <MudSelectItem Value="@(ampm)">@ampm</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+        </MudGrid>
+        <MudStack Direction="Row" Spacing="2">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenReviewer">Open Reviewer</MudButton>
+            @* <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="ShowAnswers">@(_hideAnswers?"Show Answers":"Hide Answers")</MudButton> *@
+        </MudStack>
+    </MudStack>
+</MudPaper>
+
+<MudTabs Style="margin-top:20px" Elevation="0" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Text="Questions">
+        @if (!_hideQuestions)
+        {
+            <MudPdfViewer 
+                @key="_reviewerUrl"
+                Url="@_reviewerUrl"
+            />
+            @if (_reviewerError)
+            {
+                <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Elevation="0">
+                    Could not load the questionnaire. Please check your selection or try again later.
+                </MudAlert>
+            }
+        }
+    </MudTabPanel>
+    <MudTabPanel Text="Answers">
+
+        <MudPdfViewer 
+            @key="_answerUrl"
+            Url="@_answerUrl"
+        />
+        @if (_answerError)
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Elevation="0">
+                Could not load the answer sheet. Please check your selection or try again later.
+            </MudAlert>
+        }
+        
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    // Defaults
+    private int _selectedYear = 2007;
+    private string _selectedQuarter = "Spring";
+    private string _selectedAmPm = "AM";
+
+    // Lists for dropdowns
+    private List<int> _years = Enumerable.Range(2007, 19).ToList(); // Years from 2007 to 2025
+    private readonly string[] _quarters = ["Spring", "Autumn"];
+    private readonly string[] _ampm = ["AM", "PM"];
+
+    private bool _hideQuestions = true;
+    private bool _hideAnswers = true;
+    private string? _reviewerUrl;
+    private string? _answerUrl;
+    private bool _reviewerError;
+    private bool _answerError;
+
+    private async Task OpenReviewer()
+    {
+        _hideQuestions = false;
+        _reviewerError = false;
+
+        _reviewerUrl = await BuildPdfUrlAsync(true);
+        await ShowAnswers();
+        _hideAnswers = true;
+
+        if (_reviewerUrl is null) _reviewerError = true;
+    }
+
+    private async Task ShowAnswers()
+    {
+        _hideAnswers = !_hideAnswers;
+        if (!_hideAnswers)
+        {
+            _answerError = false;
+
+            _answerUrl = await BuildPdfUrlAsync(false);
+            if(_answerUrl is null) _answerError = true;
+        }
+    }
+
+    private async Task<string?> BuildPdfUrlAsync(bool isQuestion)
+    {
+        var quarter = _selectedQuarter == "Spring" ? "Q2" : "Q4";
+        var fileDiscriminator = isQuestion ? "Que" : "Ans";
+        var url = $"/pdf/{_selectedYear}/{quarter}/" + 
+            $"{_selectedYear}{quarter}_FE_{_selectedAmPm}_{fileDiscriminator}.pdf";
+
+        var existingUrl = await CheckFileExistsAsync(url);
+
+        return (existingUrl != null) ? url : null;
+    }
+
+    private async Task<string?> CheckFileExistsAsync(string url)
+    {
+        try
+        {
+            _ = await Http.GetByteArrayAsync(url);
+        }
+        catch
+        {
+            Console.WriteLine("Did not find the file");
+            return null;
+        }
+        
+        return url;
+    }
+}
