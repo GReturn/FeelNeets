@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "FeelNeets",
   "resources": {
-    "hash": "sha256-Es2EqqBjtrYwZid7sC23nzeQZueFwxB5/U5wMmcez/c=",
+    "hash": "sha256-XvijUzpZzbTJ/0VP1cXHCAlQgjh1LXebUwT5D3jOwxU=",
     "jsModuleNative": {
       "dotnet.native.8.0.19.ihm50f0zha.js": "sha256-O/NCYcAN9uPocD7ns7AzF/cqx7f5vL1PTJCQs0vEXyk="
     },
@@ -17,7 +17,7 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "FeelNeets.wasm": "sha256-wp8m0YfMuAzTAP7+aNCFTIIEOmEb+jr2qUeWdL/FOnI=",
+      "FeelNeets.wasm": "sha256-/n6hbMrUu829+4+aF5jjhHGwwqw1HoCnJP2kdR3GJsM=",
       "Gotho.BlazorPdf.MudBlazor.wasm": "sha256-IUChwMLUzINS7X/FdCWKVl4UN6sXy7/yh4RKS2RV02Y=",
       "Gotho.BlazorPdf.wasm": "sha256-4Q9dJQhOBR2ymmC9M35E8DDK92tLcEnaXTDGvODGvXI=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-O/cmN8vXPw41uzirqKnywPYp71yD1rOauWwr/qeepdQ=",
