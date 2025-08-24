@@ -121,7 +121,7 @@
     {
         var quarter = _selectedQuarter == "Spring" ? "Q2" : "Q4";
         var fileDiscriminator = isQuestion ? "Que" : "Ans";
-        var url = $"/pdf/{_selectedYear}/{quarter}/" + 
+        var url = $"pdf/{_selectedYear}/{quarter}/" + 
             $"{_selectedYear}{quarter}_FE_{_selectedAmPm}_{fileDiscriminator}.pdf";
 
         var existingUrl = await CheckFileExistsAsync(url);
