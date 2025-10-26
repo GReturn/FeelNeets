@@ -1,7 +1,9 @@
 # FeelNEETS
-https://greturn.github.io/FeelNeets/
+**Live demo: [https://greturn.github.io/FeelNeets/](https://greturn.github.io/FeelNeets/)**
 
-A website storing PhilNITS reviewers -- questionnaires and answer sheets from 2007 to 2025 (Q2).
+![feelneets-screenshot](feelneets-preview.png)
+
+A website storing PhilNITS reviewers -- questionnaires and answer sheets from 2007 to 2025.
 
 you can just download them directly from the [PhilNITS website](https://itpec.org/pastexamqa/fe.html), but I just wanted an excuse to work with Blazor WASM.
 
